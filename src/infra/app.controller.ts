@@ -2,10 +2,14 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { randomUUID } from 'node:crypto';
 import { CreateNotificationBody } from './create-notification-body';
+import { PacketSecurityService } from './packet-security.service';
 
 @Controller('notifications')
 export class AppController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly packetSecurityService: PacketSecurityService,
+  ) {}
 
   @Get()
   list() {
@@ -24,5 +28,10 @@ export class AppController {
         recipientId,
       },
     });
+  }
+
+  @Get('buffer')
+  async convertBuffetHexToString() {
+    // buffer.readUInt16LE(0);
   }
 }
